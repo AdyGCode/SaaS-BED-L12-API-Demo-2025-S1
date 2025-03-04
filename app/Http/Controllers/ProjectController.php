@@ -22,6 +22,14 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validated = $request->validate(
+          [
+              'name'=>['required', 'min:5','max:128',],
+              'description'=>['nullable',],
+          ]  ,
+        );
+
         $project = new Project();
         // BAD PRACTICE! Make sure you VALIDATE!
         $project->name = $request->name;
@@ -45,10 +53,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'max:128'],
-            'description' => ['nullable'],
-        ]);
+        $validated = $request->validate(
+          [
+              'name'=>['required', 'min:5','max:128',],
+              'description'=>['nullable',],
+          ]  ,
+        );
 
         $project = Project::find($id);
         // BAD PRACTICE! Make sure you VALIDATE!
